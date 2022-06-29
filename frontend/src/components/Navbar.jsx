@@ -1,7 +1,19 @@
 import { FaSignInAlt } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout, reset } from '../features/auth/authSlice'
 
 function Navbar() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.auth)
+
+  const onLogout = () => {
+    dispatch(logout())
+    dispatch(reset())
+    navigate('/')
+  }
+
   return (
     <>
       <div className="navbar bg-base-300">
@@ -12,9 +24,18 @@ function Navbar() {
             </Link>
           </div>
           <div className="flex-none">
-            <Link to={'/login'} className="btn btn-ghost normal-case text-xl">
-              <FaSignInAlt /> <p className="ml-1">Login</p>
-            </Link>
+            {user ? (
+              <button
+                onClick={onLogout}
+                className="btn btn-ghost normal-case text-xl"
+              >
+                <FaSignInAlt /> <p className="ml-1">Sign-out</p>
+              </button>
+            ) : (
+              <Link to={'/login'} className="btn btn-ghost normal-case text-xl">
+                <FaSignInAlt /> <p className="ml-1">Login</p>
+              </Link>
+            )}
           </div>
         </div>
       </div>
