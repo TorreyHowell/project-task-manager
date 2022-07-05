@@ -86,7 +86,7 @@ function Login() {
           <button className="btn btn-wide my-3">Login</button>
         </div>
         <Link className="hover:text-teal-200" to={'/create-account'}>
-          Sign-Up?
+          Sign-Up
         </Link>
       </form>
     </>
